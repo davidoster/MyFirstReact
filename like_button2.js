@@ -2,6 +2,7 @@
 
 const e = React.createElement;
 
+function myAlert() { alert("Hello"); }
 class LikeButton extends React.Component {
   constructor(props) {
     super(props);
@@ -10,7 +11,7 @@ class LikeButton extends React.Component {
 
   render() {
     return (
-        <button>{ this.props.a.textEN } </button>
+        <button onClick={myAlert}>{ this.props.a.textEN } </button>
     );
   }
 }
@@ -40,7 +41,7 @@ class EmailInput extends React.Component {
 class GenericInput extends React.Component {
     constructor(props) {
         // { id: "username", label: "Username", type: "text" }
-        console.log(props);
+        // console.log(props);
         super(props);
     }
 
@@ -54,30 +55,44 @@ class GenericInput extends React.Component {
     };
 }
 
+function IAmNobody(props) {
+    console.log(props);
+    return(
+        <div>{props.a.someText}</div>
+    );
+}
+
 class LoginForm extends React.Component {
-    constructor(props, id, method, action) {
+    constructor(props) {
+        // console.log(props);
         super(props);
     }
 
     render() {
-        return (
-            <form id={this.props.form.id} method={this.props.form.method} action={this.props.form.action} >
-                <GenericInput a={this.props.input1} /> 
-                <GenericInput a={this.props.input2} />
-                <LikeButton a={this.props.button} />
-            </form>
-        );
+        if(this.props.b.someBool) {
+            return (<IAmNobody a={this.props.b}/>);
+        } else {
+            return (
+                <form id={this.props.form.id} method={this.props.form.method} action={this.props.form.action} >
+                    <GenericInput a={this.props.input1} b={this.props.b} /> 
+                    <GenericInput a={this.props.input2} />
+                    <LikeButton a={this.props.button} />    
+                </form>
+            );
+        }
+        
     }
 }
 
 ReactDOM.render(
     React.createElement(LoginForm, { 
-        form: { id: 'myloginform', method: 'POST', action: '#'},
+        form: { id: 'myloginform', method: 'GET', action: '#'},
         input1: { id: "username", label: "Username", type: "text" }, 
         input2: { id: "password", label: "Password", type: "password" },  
-        button: { textGR: 'Είσοδος', textEN: 'Login' }
+        button: { textGR: 'Είσοδος', textEN: 'Login' },
+        b: { someText: 'Hello', anInt: 100, someBool: false}
     }),
-    document.getElementById('myform')
+    document.getElementById('content')
 );
 
 // const username = document.getElementById("myinput2");
