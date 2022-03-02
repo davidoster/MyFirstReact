@@ -10,7 +10,7 @@ class LikeButton extends React.Component {
 
   render() {
     return (
-        <button>Submit</button>
+        <button>{ this.props.a.textEN } </button>
     );
   }
 }
@@ -40,34 +40,57 @@ class EmailInput extends React.Component {
 class GenericInput extends React.Component {
     constructor(props) {
         // { id: "username", label: "Username", type: "text" }
+        console.log(props);
         super(props);
     }
 
     render() {
         return (
             <div>
-                <label htmlFor={this.props.id}>{this.props.label}: </label>
-                <input id={this.props.id} type={this.props.type} />
+                <label htmlFor={this.props.a.id}>{this.props.a.label}: </label>
+                <input id={this.props.a.id} type={this.props.a.type} />
             </div>
         );
     };
 }
 
 class LoginForm extends React.Component {
+    constructor(props, id, method, action) {
+        super(props);
+    }
 
+    render() {
+        return (
+            <form id={this.props.form.id} method={this.props.form.method} action={this.props.form.action} >
+                <GenericInput a={this.props.input1} /> 
+                <GenericInput a={this.props.input2} />
+                <LikeButton a={this.props.button} />
+            </form>
+        );
+    }
 }
 
-const username = document.getElementById("myinput2");
 ReactDOM.render(
-    React.createElement( GenericInput, { id: "username", label: "Username", type: "text" } ), 
-    username
-); 
+    React.createElement(LoginForm, { 
+        form: { id: 'myloginform', method: 'POST', action: '#'},
+        input1: { id: "username", label: "Username", type: "text" }, 
+        input2: { id: "password", label: "Password", type: "password" },  
+        button: { textGR: 'Είσοδος', textEN: 'Login' }
+    }),
+    document.getElementById('myform')
+);
 
-const password = document.getElementById("myinput");
-ReactDOM.render(
-    e( GenericInput, { id: "password", label: "Password", type: "password" } ), 
-    password
-); 
+// const username = document.getElementById("myinput2");
+// ReactDOM.render(
+//     React.createElement( GenericInput, { id: "username", label: "Username", type: "text" } ), 
+//     document.getElementById("myinput2")
+// ); 
+
+// const password = document.getElementById("myinput");
+// ReactDOM.render(
+//     e( GenericInput, { id: "password", label: "Password", type: "password" } ), 
+//     password
+// ); 
 
 // const userNameInput = document.getElementById("myinput2");
 // ReactDOM.render(e(UserNameInput), userNameInput);
@@ -75,6 +98,6 @@ ReactDOM.render(
 // const emailInputContainer = document.querySelector("#myinput");
 // ReactDOM.render(e(EmailInput), emailInputContainer);
 
-const domContainer = document.getElementById("like_button_container");
-ReactDOM.render(e(LikeButton), domContainer);
+// const domContainer = document.getElementById("like_button_container");
+// ReactDOM.render(e(LikeButton), domContainer);
 
